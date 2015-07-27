@@ -2,13 +2,19 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
-app.set('port', (process.env.PORT || 3000));
+var port = 3000 || process.env.PORT;
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
-app.listen(app.get('port'), function() {
-  console.log('Port ' + app.get('port'));
+var io = require('socket.io').listen(app.listen(port));
+
+io.sockets.on('connection', function (socket) {
+  socket.on('draw', function (data) {
+    socket.broadcast.emit('draw', data);
+  });
 });
+

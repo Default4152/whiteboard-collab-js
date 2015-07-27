@@ -1,4 +1,7 @@
-;(function () {
+;
+(function () {
+  var port = 3000 || process.env.PORT;
+  var socket = io.connect('http://localhost:' + port);
   var canvas = new fabric.Canvas('whiteboard', {
     backgroundColor: 'rgb(255, 255, 255)',
     isDrawingMode: true
@@ -22,6 +25,16 @@
 
   bWidth.addEventListener('input', function () {
     canvas.freeDrawingBrush.width = this.value;
+  });
+
+  socket.on('draw', function (data) {
+    fabric.Path.fromObject(data, function (path) {
+      canvas.add(path);
+    })
+  });
+
+  canvas.on('path:created', function (e) {
+    socket.emit('draw', e.path);
   });
 
   resizeCanvas();
