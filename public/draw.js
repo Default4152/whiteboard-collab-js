@@ -1,7 +1,6 @@
 ;
 (function () {
-  var port = 3000 || process.env.PORT;
-  var socket = io.connect('http://localhost:' + port);
+  var socket = io.connect(window.location.hostname);
   var canvas = new fabric.Canvas('whiteboard', {
     backgroundColor: 'rgb(255, 255, 255)',
     isDrawingMode: true
