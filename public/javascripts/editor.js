@@ -1,10 +1,16 @@
 ;
 (function () {
-  var socket = io.connect(window.location.hostname);
+  var socket = io.connect(window.location.hostname); // heroku
+  //var socket = io.connect('http://localhost:8080');
   var editor = ace.edit("editor");
-  editor.setByAPI = false;
+  var session = editor.getSession();
+  var Range = ace.require("ace/range").Range;
+  require("ace/multi_select").MultiSelect(editor);
   editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/javascript");
+  editor.setByAPI = false;
+  session.setMode("ace/mode/javascript");
+  session.setUseWrapMode(true);
+  session.setUseWorker(false);
 
   var runCode = document.getElementsByClassName('runCode')[0];
   var resetCode = document.getElementsByClassName('runCode')[1];
@@ -31,6 +37,7 @@
   };
 
   socket.on('editorUpdate', function (data) {
+    editor.session.addMarker(new Range(1,0,1,200),"ace_active-line","fullLine");
     editor.setByAPI = true;
     editor.setValue(data.contents);
     editor.clearSelection();

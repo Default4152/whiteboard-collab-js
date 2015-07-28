@@ -1,0 +1,21 @@
+#editor {
+  height: 400px;
+  width: 40%;
+  float: left;
+}
+
+.log {
+  height: 400px;
+  width: 40%;
+  background-color: black;
+  color: white;
+  float: left;
+  margin-left: 10px;
+}
+
+.runCode {
+  clear: both;
+  float: left;
+  padding: 15px;
+  font-size: 20px;
+}
