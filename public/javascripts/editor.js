@@ -1,7 +1,7 @@
 ;
 (function () {
-  var socket = io.connect(window.location.hostname); // heroku
-  //var socket = io.connect('http://localhost:8080');
+  //var socket = io.connect(window.location.hostname); // heroku
+  var socket = io.connect('http://localhost:8080');
   var editor = ace.edit("editor");
   var session = editor.getSession();
   var Range = ace.require("ace/range").Range;

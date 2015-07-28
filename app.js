@@ -62,8 +62,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-//mongoose.connect('mongodb://localhost/passport_whiteboard'); //local
-mongoose.connect('mongodb://' + process.env.MONGOLAB_URI); // heroku
+mongoose.connect(process.env.MONGOLAB_URI_LOCAL); // local
+//mongoose.connect(process.env.MONGOLAB_URI); // heroku
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
