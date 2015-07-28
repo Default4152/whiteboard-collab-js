@@ -13,7 +13,6 @@ var routes = require('./routes/index');
 
 var app = express();
 var port = process.env.PORT || 8080;
-//var server = require('http').createServer(app).listen(port);
 var io = require('socket.io').listen(app.listen(port));
 
 

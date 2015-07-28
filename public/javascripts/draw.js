@@ -1,7 +1,7 @@
 ;
 (function () {
-  //var socket = io.connect(window.location.hostname); //heroku
-  var socket = io.connect('http://localhost:8080'); // local
+  var socket = io.connect(window.location.hostname); //heroku
+  //var socket = io.connect('http://localhost:8080'); // local
   var canvas = new fabric.Canvas('whiteboard', {
     backgroundColor: 'rgb(255, 255, 255)',
     isDrawingMode: true
