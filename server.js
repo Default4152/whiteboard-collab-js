@@ -7,7 +7,11 @@ var port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/views/index.html'));
+  res.sendFile(path.join(__dirname + '/views/whiteboard.html'));
+});
+
+app.get('/codeeditor', function(req, res) {
+  res.sendFile(path.join(__dirname + '/views/codeeditor.html'));
 });
 
 var io = require('socket.io').listen(app.listen(port));
