@@ -1,4 +1,6 @@
-;(function () {
+;
+(function () {
+  var socket = io.connect(window.location.hostname);
   var editor = ace.edit("editor");
   editor.setByAPI = false;
   editor.setTheme("ace/theme/monokai");
@@ -7,7 +9,7 @@
   var runCode = document.getElementsByClassName('runCode')[0];
   var resetCode = document.getElementsByClassName('runCode')[1];
 
-  runCode.addEventListener('click', function() {
+  runCode.addEventListener('click', function () {
     var code = editor.getValue();
 
     var script = document.createElement('script');
@@ -15,7 +17,7 @@
     document.body.appendChild(script);
   });
 
-  resetCode.addEventListener('click', function() {
+  resetCode.addEventListener('click', function () {
     log.innerHTML = '';
   });
 
@@ -26,5 +28,20 @@
     } else {
       log.innerHTML += message + '<br />';
     }
-  }
+  };
+
+  socket.on('editorUpdate', function (data) {
+    editor.setByAPI = true;
+    editor.setValue(data.contents);
+    editor.clearSelection();
+    editor.setByAPI = false;
+  });
+
+  editor.on('change', function () {
+    if (!editor.setByAPI) {
+      socket.emit('editorUpdate', {
+        contents: editor.getValue()
+      });
+    }
+  });
 })();
