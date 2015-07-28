@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 
 var app = express();
 var port = process.env.PORT || 8080;
+var server = app.listen(port);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -62,8 +63,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-//mongoose.connect('mongodb://localhost/passport_whiteboard'); //local
-mongoose.connect('mongodb://' + process.env.MONGOLAB_URI); // heroku
+mongoose.connect('mongodb://localhost/passport_whiteboard'); //local
+//mongoose.connect('mongodb://' + process.env.MONGOLAB_URI); // heroku
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
