@@ -11,6 +11,7 @@
   session.setMode("ace/mode/javascript");
   session.setUseWrapMode(true);
   session.setUseWorker(false);
+  editor.$blockScrolling = Infinity;
 
   var runCode = document.getElementsByClassName('runCode')[0];
   var resetCode = document.getElementsByClassName('runCode')[1];
