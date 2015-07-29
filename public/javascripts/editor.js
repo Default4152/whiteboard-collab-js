@@ -13,8 +13,8 @@
   session.setUseWorker(false);
   editor.$blockScrolling = Infinity;
 
-  var runCode = document.getElementsByClassName('runCode')[0];
-  var resetCode = document.getElementsByClassName('runCode')[1];
+  var runCode = document.getElementsByClassName('codeEditorBtn')[0];
+  var resetCode = document.getElementsByClassName('codeEditorBtn')[1];
 
   runCode.addEventListener('click', function () {
     var code = editor.getValue();
@@ -38,7 +38,7 @@
   };
 
   socket.on('editorUpdate', function (data) {
-    editor.session.addMarker(new Range(1,0,1,200),"ace_active-line","fullLine");
+    editor.session.addMarker(new Range(1, 0, 1, 200), "ace_active-line", "fullLine");
     editor.setByAPI = true;
     editor.setValue(data.contents);
     editor.clearSelection();

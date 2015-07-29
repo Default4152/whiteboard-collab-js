@@ -7,13 +7,6 @@
     isDrawingMode: true
   });
 
-  window.addEventListener('resize', resizeCanvas);
-
-  function resizeCanvas() {
-    canvas.setHeight(window.innerHeight);
-    canvas.setWidth(window.innerWidth);
-  }
-
   var bWidth = document.getElementsByClassName('bWidth')[0];
   var bColor = document.getElementsByClassName('bColor')[0];
 
@@ -37,7 +30,6 @@
     socket.emit('draw', e.path);
   });
 
-  resizeCanvas();
 })();
 
 
