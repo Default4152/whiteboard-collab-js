@@ -73,7 +73,7 @@ app.get('/codeeditor', function (req, res) {
   });
 });
 
-app.get('/profile', function(req, res) {
+app.get('/profile', function (req, res) {
   res.render('profile', {
     user: req.user
   });
@@ -91,22 +91,44 @@ mongoose.connect(process.env.MONGOLAB_URI); // heroku
 
 //pastebin
 app.post('/pasteme', function (req, res) {
-  //console.log(req.user);
   var o = JSON.stringify(req.body.code, null, 4);
   o = JSON.parse(o);
   pastebin
     .createPaste(o, "", 'javascript')
     .then(function (data) {
       console.log(data);
-      User.findOneAndUpdate({username: req.user.username}, {$push: {bins: data}}, function(err, user) {
+      User.findOneAndUpdate({
+        username: req.user.username
+      }, {
+        $push: {
+          bins: data
+        }
+      }, function (err, user) {
         if (err) throw err;
-        console.log(user);
       });
     })
     .fail(function (err) {
       console.log(err);
     });
   res.redirect('/codeeditor');
+});
+
+app.get('/delete/*', function (req, res) {
+  function getN(url) {
+    return url.split('/').pop()
+  }
+
+  User.update({
+    _id: req.user._id
+  }, {
+    $pull: {
+      'bins': getN(req.url)
+    }
+  }, function (err, user) {
+    console.log(user);
+  });
+
+  res.redirect('/profile');
 });
 
 

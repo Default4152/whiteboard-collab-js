@@ -3,8 +3,10 @@
         <a href="/">Home</a><br>
         <hr>
         <h3>Saved Code Links</h3>
+
         {{#each user.bins}}
             <a href="http://pastebin.com/{{this}}">{{this}}</a>
+            <a href="/delete/{{this}}" class="delete">Delete</a>
         {{/each}}
     </div>
 </div>
