@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="links-container">
+        <a href="/">Home</a><br>
+        <hr>
+        <h3>Saved Code Links</h3>
+        {{#each user.bins}}
+            <a href="http://pastebin.com/{{this}}">{{this}}</a>
+        {{/each}}
+    </div>
+</div>

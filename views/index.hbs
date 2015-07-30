@@ -1,8 +1,16 @@
 <div class="container">
     <div class="links-container">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-        <a href="/whiteboard">Whiteboard</a>
-        <a href="/codeeditor">Code Editor</a>
+
+        {{#if user.username}}
+            <h1>Welcome, {{user.username}}</h1>
+            <a href="/whiteboard">Whiteboard</a>
+            <a href="/codeeditor">Code Editor</a>
+            <a href="/profile">Saved</a>
+            <a href="/logout">Logout</a>
+        {{else}}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {{/if}}
+
     </div>
 </div>

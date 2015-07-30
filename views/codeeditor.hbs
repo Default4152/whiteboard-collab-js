@@ -1,16 +1,29 @@
-<div class="editorContain">
-    <div id="editor">
+{{#if user.username}}
+    <div class="editorContain">
+        <div id="editor">
+        </div>
+        <div class="log">
+        </div>
     </div>
-    <div class="log">
+    <div class="runLinks">
+        <a href="#" class="codeEditorBtn">Run</a>
+        <a href="#" class="codeEditorBtn">Clear Console</a>
+        <a href="/" class="codeEditorBtn home">Home</a>
+
+        <form action="/pasteme" method="post">
+            <input type="text" name="code" value="" hidden id="codeStore"/>
+            <input type="submit" class="saveCode codeEditorBtn" value="Save Code">
+        </form>
+
     </div>
-
-</div>
-<div class="runLinks">
-    <a href="#" class="codeEditorBtn">Run</a>
-    <a href="#" class="codeEditorBtn">Clear Console</a>
-    <a href="/" class="codeEditorBtn home">Home</a>
-</div>
-
+{{else}}
+    <div class="container">
+        <div class="links-container">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </div>
+{{/if}}
 
 
 

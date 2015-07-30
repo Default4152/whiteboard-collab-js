@@ -1,7 +1,7 @@
 ;
 (function () {
-  var socket = io.connect(window.location.hostname); // heroku
-  //var socket = io.connect('http://localhost:8080');
+  //var socket = io.connect(window.location.hostname); // heroku
+  var socket = io.connect('http://localhost:8080');
   var editor = ace.edit("editor");
   var session = editor.getSession();
   var Range = ace.require("ace/range").Range;
@@ -15,6 +15,14 @@
 
   var runCode = document.getElementsByClassName('codeEditorBtn')[0];
   var resetCode = document.getElementsByClassName('codeEditorBtn')[1];
+
+  var saveCode = document.getElementsByClassName('saveCode')[0];
+  var codeStore = document.getElementById('codeStore');
+
+  saveCode.addEventListener('click', function () {
+    var code = editor.getValue();
+    codeStore.value = code;
+  });
 
   runCode.addEventListener('click', function () {
     var code = editor.getValue();

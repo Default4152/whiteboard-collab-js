@@ -1,10 +1,22 @@
 ;
 (function () {
-  var socket = io.connect(window.location.hostname); //heroku
-  //var socket = io.connect('http://localhost:8080'); // local
+  //var socket = io.connect(window.location.hostname); //heroku
+  var socket = io.connect('http://localhost:8080'); // local
   var canvas = new fabric.Canvas('whiteboard', {
     backgroundColor: 'rgb(255, 255, 255)',
     isDrawingMode: true
+  });
+
+  var canvasClear = document.getElementsByClassName('clearCanvas')[0];
+  canvasClear.addEventListener('click', function () {
+    canvas.clear();
+  });
+
+  var saveSnapshot = document.getElementsByClassName('save')[0];
+
+  saveSnapshot.addEventListener('click', function () {
+    var img = canvas.toDataURL('image/png');
+    console.log(img);
   });
 
   var bWidth = document.getElementsByClassName('bWidth')[0];

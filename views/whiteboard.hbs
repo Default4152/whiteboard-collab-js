@@ -1,15 +1,25 @@
-<div class="wControl">
-    <input class="bColor" type="color">
-    <input class="bWidth" type="range" min="1" max="30" value="5">
-</div>
-<div class="wContain">
-    <canvas id="whiteboard" width="1000" height="800">
-    </canvas>
-    <div class="runLinks">
-        <a href="#" class="codeEditorBtn">Save Snapshot</a>
-        <a href="/" class="codeEditorBtn home">Home</a>
+{{#if user.username}}
+    <div class="wControl">
+        <input class="bColor" type="color">
+        <input class="bWidth" type="range" min="1" max="30" value="5">
     </div>
-</div>
+    <div class="wContain">
+        <canvas id="whiteboard" width="1000" height="500">
+        </canvas>
+        <div class="runLinks">
+            <a href="#" class="codeEditorBtn save">Save Snapshot</a>
+            <a href="#" class="codeEditorBtn clearCanvas">Clear Canvas</a>
+            <a href="/" class="codeEditorBtn home">Home</a>
+        </div>
+    </div>
+{{else}}
+    <div class="container">
+        <div class="links-container">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </div>
+{{/if}}
 
 
-<script src="javascripts/draw.js"></script>
+<script src="/javascripts/draw.js"></script>

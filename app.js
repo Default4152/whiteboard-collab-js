@@ -5,9 +5,19 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var expressSession = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var MongoStore = require('connect-mongo')(expressSession);
 require('dotenv').load();
+var User = require('./models/account');
+var PastebinAPI = require('pastebin-js');
+var pastebin = new PastebinAPI('d5ee05860f0fa9063c5d39302e29a144');
+pastebin = new PastebinAPI({
+  'api_dev_key': 'd5ee05860f0fa9063c5d39302e29a144',
+  'api_user_name': 'javascriptguy',
+  'api_user_password': process.env.pastebinPass
+});
 
 var routes = require('./routes/index');
 
@@ -35,22 +45,38 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
 app.use(cookieParser());
-app.use(require('express-session')({
+app.use(expressSession({
   secret: process.env.secret,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/whiteboard', function (req, res) {
-  res.render('whiteboard');
+  var previous = req.session.value || 0;
+  req.session.value = previous + 1;
+  res.render('whiteboard', {
+    user: req.user
+  });
 });
 
 app.get('/codeeditor', function (req, res) {
-  res.render('codeeditor');
+  res.render('codeeditor', {
+    user: req.user
+  });
+});
+
+app.get('/profile', function(req, res) {
+  res.render('profile', {
+    user: req.user
+  });
 });
 
 app.use('/', routes);
@@ -60,8 +86,29 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-//mongoose.connect(process.env.MONGOLAB_URI_LOCAL); // local
-mongoose.connect(process.env.MONGOLAB_URI); // heroku
+mongoose.connect(process.env.MONGOLAB_URI_LOCAL); // local
+//mongoose.connect(process.env.MONGOLAB_URI); // heroku
+
+//pastebin
+app.post('/pasteme', function (req, res) {
+  //console.log(req.user);
+  var o = JSON.stringify(req.body.code, null, 4);
+  o = JSON.parse(o);
+  pastebin
+    .createPaste(o, "", 'javascript')
+    .then(function (data) {
+      console.log(data);
+      User.findOneAndUpdate({username: req.user.username}, {$push: {bins: data}}, function(err, user) {
+        if (err) throw err;
+        console.log(user);
+      });
+    })
+    .fail(function (err) {
+      console.log(err);
+    });
+  res.redirect('/codeeditor');
+});
+
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found');

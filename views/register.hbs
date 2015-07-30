@@ -1,9 +1,14 @@
-<h1>Register</h1>
-<form action="/register" method="post">
-    <input type="text" name="username"/>
-    <input type="password" name="password"/>
-    <button type="submit">Submit</button>
-    <a href="/"><button type="button">Cancel</button></a>
+<form action="/register" method="post" class="form-style">
+    <h1>Register</h1>
+    <label>Username
+        <input type="text" name="username" class="input"/>
+    </label>
+    <label>Password
+        <input type="password" name="password" class="input"/>
+    </label>
+
+    <button type="submit" class="button">Submit</button>
+    <a href="/"><button type="button" class="button">Cancel</button></a>
 </form>
 
 <h4>{{info}}</h4>
