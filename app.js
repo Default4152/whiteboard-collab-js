@@ -86,8 +86,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect(process.env.MONGOLAB_URI_LOCAL); // local
-//mongoose.connect(process.env.MONGOLAB_URI); // heroku
+//mongoose.connect(process.env.MONGOLAB_URI_LOCAL); // local
+mongoose.connect(process.env.MONGOLAB_URI); // heroku
 
 //pastebin
 app.post('/pasteme', function (req, res) {
