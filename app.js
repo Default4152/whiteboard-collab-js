@@ -117,7 +117,6 @@ app.get('/delete/*', function (req, res) {
   function getN(url) {
     return url.split('/').pop()
   }
-
   User.update({
     _id: req.user._id
   }, {
